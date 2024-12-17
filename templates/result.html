@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>結果</title>
+</head>
+<body>
+    <h1>認識結果</h1>
+    <img src="{{ output_image }}" alt="Processed Image">
+    <h2>サイズ分類:</h2>
+    <ul>
+        {% for size in sizes %}
+            <li>X: {{ size[0] }}, Y: {{ size[1] }}, 直径: {{ size[2] | round(2) }}cm, カテゴリ: {{ size[3] }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">戻る</a>
+</body>
+</html>
