@@ -1,17 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブロッコリー認識システム - 登録</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- カスタムCSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background: #fff;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 15px 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #4e0ba8;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .text-muted a {
+            color: #6a11cb;
+        }
+
+        .text-muted a:hover {
+            text-decoration: underline;
+        }
+
+        .system-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f0f8ff;
+        }
+    </style>
 </head>
 <body>
-    <h1>ユーザー登録</h1>
-    <form method="POST">
-        <label>ユーザー名: </label>
-        <input type="text" name="username" required><br>
-        <label>パスワード: </label>
-        <input type="password" name="password" required><br>
-        <button type="submit">登録</button>
-    </form>
-    <p>すでにアカウントをお持ちですか？ <a href="{{ url_for('login') }}">ログイン</a></p>
+    <div class="container">
+        <!-- システムタイトル -->
+        <div class="system-title">ブロッコリー認識システム</div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- 登録カード -->
+                <div class="card">
+                    <div class="card-header">
+                        <strong>登録ページ</strong>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ url_for('routes.register') }}">
+                            <!-- ユーザー名 -->
+                            <div class="form-group">
+                                <label for="username">ユーザー名</label>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="ユーザー名" required>
+                            </div>
+                            <!-- パスワード -->
+                            <div class="form-group">
+                                <label for="password">パスワード</label>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="パスワード" required>
+                            </div>
+                            <!-- 登録ボタン -->
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-block">登録</button>
+                            </div>
+                            <!-- ログインリンク -->
+                            <div class="text-center text-muted">
+                                すでにアカウントをお持ちですか？
+                                <a href="{{ url_for('routes.login') }}">ログイン</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- 登録カード終了 -->
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JSと依存関係 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
