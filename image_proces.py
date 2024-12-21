@@ -1,6 +1,7 @@
 import cv2
 import os
 import numpy as np
+from config import Config
 
 
 def detect_broccoli_size(image_path):
@@ -35,6 +36,8 @@ def detect_broccoli_size(image_path):
             image, f"{size_label}", (int(x) - 20, int(y) - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2
         )
 
-    result_path = os.path.join("static", "processed_" + os.path.basename(image_path))
+        # 結果画像の保存
+    result_filename = "processed_" + os.path.basename(image_path)  # ファイル名のみ
+    result_path = os.path.join(Config.UPLOAD_FOLDER, result_filename)
     cv2.imwrite(result_path, image)
-    return result_path
+    return result_filename  # ファイル名のみを返す

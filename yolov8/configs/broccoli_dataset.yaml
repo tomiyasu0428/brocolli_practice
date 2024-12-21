@@ -1,0 +1,4 @@
+train: /Users/tomiyasuhiroki/camp/python/broccoli_size_app/yolov8/datasets/train
+val: /Users/tomiyasuhiroki/camp/python/broccoli_size_app/yolov8/datasets/val
+nc: 1
+names: ['broccoli']

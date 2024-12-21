@@ -112,19 +112,23 @@ def delete_file(file_id):
         return redirect(url_for("routes.login"))
 
     with get_db() as conn:
+        # 該当のファイルがユーザーのものであるか確認
         file_entry = conn.execute(
             "SELECT * FROM upload_history WHERE id = ? AND user_id = ?", (file_id, session["user_id"])
         ).fetchone()
+
         if file_entry:
-            file_name = os.path.basename(file_entry["result_image"])
-            file_path = os.path.join(Config.UPLOAD_FOLDER, file_name)
-            if os.path.exists(file_path):
-                os.remove(file_path)
+            file_path = file_entry["result_image"]
+            # ファイルが存在すれば削除
+            if os.path.exists(os.path.join(Config.UPLOAD_FOLDER, file_path)):
+                os.remove(os.path.join(Config.UPLOAD_FOLDER, file_path))
+
+            # データベースからレコードを削除
             conn.execute("DELETE FROM upload_history WHERE id = ?", (file_id,))
             conn.commit()
             flash("ファイルが削除されました。", "success")
         else:
-            flash("ファイルが存在しないか、権限がありません。", "danger")
+            flash("ファイルが見つかりません。", "danger")
 
     return redirect(url_for("routes.dashboard"))
 
@@ -132,7 +136,16 @@ def delete_file(file_id):
 # ファイルダウンロード機能
 @routes_bp.route("/download/<path:filename>")
 def download(filename):
+    # パスを安全に構築
     file_path = os.path.join(Config.UPLOAD_FOLDER, filename)
+    file_path = os.path.abspath(file_path)
+
+    # セキュリティ対策: UPLOAD_FOLDERの外へのアクセスを防止
+    if not file_path.startswith(os.path.abspath(Config.UPLOAD_FOLDER)):
+        flash("不正なファイルパスです。", "danger")
+        return redirect(url_for("routes.dashboard"))
+
+    # ファイルの存在確認
     if os.path.exists(file_path):
         return send_file(file_path, as_attachment=True)
     else:

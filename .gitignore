@@ -1,2 +1,6 @@
 .venv
 .env
+yolov8/runs/
+yolov8/models/best.pt
+yolov8/datasets/
+yolov8/logs/
